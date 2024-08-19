@@ -1,0 +1,5 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- INSERT into friend (name) VALUES ('JIAN');
+-- INSERT into friend (name) VALUES ('SAE');
+-- INSERT into friend (name) VALUES ('TAESONG');
