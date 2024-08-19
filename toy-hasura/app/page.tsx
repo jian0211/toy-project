@@ -13,6 +13,7 @@ const GET_FRIENDS = gql`
 export default async function Home() {
   const { data, loading, error } = await getClient().query({
     query: GET_FRIENDS,
+    fetchPolicy: "no-cache",
   });
 
   if (loading) return <div>loadding...</div>;
@@ -20,7 +21,7 @@ export default async function Home() {
 
   return (
     <main className={styles.main}>
-      {data.friend.map((friend, i) => (
+      {data.friend.map((friend: any, i: any) => (
         <p key={i}>{friend.name}</p>
       ))}
     </main>
