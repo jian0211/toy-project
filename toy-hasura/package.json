@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "graphql-codegen -r dotenv/config --config codegen.yml dotenv_config_path=./.env.local"
   },
   "dependencies": {
     "@apollo/client": "^3.11.4",
@@ -15,6 +16,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "dotenv": "^16.4.5",
     "framer-motion": "^11.3.28",
     "graphql": "^16.9.0",
     "next": "13.5.6",
@@ -24,6 +26,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.3.3",
+    "@graphql-codegen/introspection": "4.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
