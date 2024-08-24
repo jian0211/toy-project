@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ChakraProvider } from "@/providers/ChakraProvider";
 import Navigation from "@/components/navBar/Navigation";
+import { Box } from "@chakra-ui/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navigation />
-        <ChakraProvider>{children}</ChakraProvider>
+        <Box as="main" display="flex">
+          <Box as="aside" flex="1" />
+          <ChakraProvider>{children}</ChakraProvider>
+          <Box as="aside" flex="1" />
+        </Box>
       </body>
     </html>
   );

@@ -10,7 +10,6 @@ const NavContainer: React.FC<NavContainerProps> = (props) => {
     <Flex
       as="nav"
       height="4rem"
-      backgroundColor="red"
       justifyContent="center"
       alignItems="center"
       gap="1rem"

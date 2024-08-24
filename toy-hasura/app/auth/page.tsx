@@ -1,32 +1,34 @@
 "use client";
 
+import { Form } from "@/components/form/Form";
+import { CustomRadioGroup } from "@/components/Input/Radio";
+import { useStore } from "@/store/store";
 import {
-  Box,
   Button,
-  FormControl,
+  Flex,
+  FormControlProps,
   FormLabel,
-  HStack,
   Input,
-  useRadio,
-  useRadioGroup,
-  UseRadioGroupProps,
-  UseRadioProps,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 type AuthSwitch = "login" | "signup";
-type CustomRadioGroupProps = {
-  radioOptions: { value: string; label: string }[];
-} & UseRadioGroupProps;
-type RadioCardProps = {
-  children: React.ReactNode;
-} & UseRadioProps;
+
+const INTENTIONS = {
+  LOGIN: "login",
+  SIGNUP: "signup",
+};
+
+type Props = {};
+
+const shouldLogin = (intention: string) => intention === INTENTIONS.LOGIN;
+const shouldSignup = (intention: string) => intention === INTENTIONS.SIGNUP;
 
 export default function Auth() {
   const [authSwith, setAuthSwith] = useState<AuthSwitch>("login");
 
   return (
-    <div>
+    <Flex as="section" direction="column" gap="1rem" px="1rem">
       <h1> Auth page {authSwith}</h1>
 
       <CustomRadioGroup
@@ -39,59 +41,104 @@ export default function Auth() {
         ]}
       />
 
-      <FormControl as="form">
-        <FormLabel htmlFor="email">あなたのお名前は?</FormLabel>
-        <Input placeholder="名前" type="email" id="email" isRequired />
-        <FormLabel>パスワードは?</FormLabel>
-        <Input type="password" isRequired />
-
-        <Button type="submit" colorScheme="teal" variant="solid">
-          {authSwith.toUpperCase()}
-        </Button>
-      </FormControl>
+      {authSwith === "login" && <LoginForm />}
+      {authSwith === "signup" && <SignupForm />}
 
       <hr />
-    </div>
+    </Flex>
   );
 }
 
-const CustomRadioGroup: React.FC<CustomRadioGroupProps> = (props) => {
-  const { radioOptions, ...radioGroupProps } = props;
-  const { getRootProps, getRadioProps } = useRadioGroup(radioGroupProps);
+const SignupForm: React.FC<FormControlProps> = (props) => {
+  const { signup } = useStore();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    signup({ username, password });
+  };
   return (
-    <HStack as="fieldset" {...getRootProps()}>
-      {radioOptions.map(({ value, label }) => (
-        <RadioCard key={value} {...getRadioProps({ value })}>
-          {label}
-        </RadioCard>
-      ))}
-    </HStack>
+    <Form onSubmit={handleSubmit} {...props}>
+      <FormLabel htmlFor="name">あなたのお名前は?</FormLabel>
+      <Input
+        placeholder="名前"
+        type="name"
+        id="name"
+        value={username}
+        onChange={(e) => {
+          const currentUsername = e.currentTarget.value;
+          setUsername(currentUsername);
+        }}
+        isRequired
+      />
+      <FormLabel>パスワードは?</FormLabel>
+      <Input
+        type="password"
+        value={password}
+        onChange={(e) => {
+          const currentPassword = e.currentTarget.value;
+          setPassword(currentPassword);
+        }}
+        isRequired
+      />
+
+      <Button
+        type="submit"
+        w="fit-content"
+        colorScheme="teal"
+        variant="solid"
+        my="1rem"
+      >
+        Signup
+      </Button>
+    </Form>
   );
 };
 
-const RadioCard: React.FC<RadioCardProps> = (props) => {
-  const { children, ...radioProps } = props;
-  const { getInputProps, getRadioProps } = useRadio(radioProps);
+const LoginForm: React.FC<FormControlProps> = (props) => {
+  const { login } = useStore();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
+  const handleSubmit = (e: React.FormEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    login({ username, password });
+  };
   return (
-    <Box
-      as="label"
-      cursor="pointer"
-      borderRadius="md"
-      boxShadow="md"
-      _checked={{
-        bg: "teal.600",
-        color: "white",
-        borderColor: "teal.600",
-      }}
-      _focus={{ boxShadow: "outline" }}
-      _hover={{ bg: "teal.200" }}
-      px={5}
-      py={1}
-      {...getRadioProps()}
-    >
-      {props.children}
-      <input {...getInputProps()} hidden />
-    </Box>
+    <Form onSubmit={handleSubmit} {...props}>
+      <FormLabel htmlFor="name">あなたのお名前は?</FormLabel>
+      <Input
+        placeholder="名前"
+        type="name"
+        id="name"
+        value={username}
+        onChange={(e) => {
+          const currentUsername = e.currentTarget.value;
+          setUsername(currentUsername);
+        }}
+        isRequired
+      />
+      <FormLabel>パスワードは?</FormLabel>
+      <Input
+        type="password"
+        value={password}
+        onChange={(e) => {
+          const currentPassword = e.currentTarget.value;
+          setPassword(currentPassword);
+        }}
+        isRequired
+      />
+
+      <Button
+        type="submit"
+        w="fit-content"
+        colorScheme="teal"
+        variant="solid"
+        my="1rem"
+      >
+        Login
+      </Button>
+    </Form>
   );
 };
