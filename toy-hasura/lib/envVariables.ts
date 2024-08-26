@@ -13,6 +13,8 @@ import { z } from "zod";
 const envVariables = z.object({
   NEXT_PUBLIC_HASURA_PROJECT_ENDPOINT: z.string(),
   HASURA_ADMIN_SECRET: z.string(),
+  HASURA_JWT_SECRET_TYPE: z.string(),
+  HASURA_JWT_SECRET_KEY: z.string(),
 });
 
 // 検証
