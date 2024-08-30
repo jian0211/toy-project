@@ -88,10 +88,12 @@ export type Friend = {
   __typename?: 'friend';
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+  password?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
   pizza_orders: Array<Pizza_Order>;
   /** An aggregate relationship */
   pizza_orders_aggregate: Pizza_Order_Aggregate;
+  username: Scalars['String']['output'];
 };
 
 
@@ -157,14 +159,18 @@ export type Friend_Bool_Exp = {
   _or?: InputMaybe<Array<Friend_Bool_Exp>>;
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  password?: InputMaybe<String_Comparison_Exp>;
   pizza_orders?: InputMaybe<Pizza_Order_Bool_Exp>;
   pizza_orders_aggregate?: InputMaybe<Pizza_Order_Aggregate_Bool_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "friend" */
 export enum Friend_Constraint {
   /** unique or primary key constraint on columns "id" */
-  FriendPkey = 'friend_pkey'
+  FriendPkey = 'friend_pkey',
+  /** unique or primary key constraint on columns "username" */
+  FriendUsernameKey = 'friend_username_key'
 }
 
 /** input type for incrementing numeric columns in table "friend" */
@@ -176,7 +182,9 @@ export type Friend_Inc_Input = {
 export type Friend_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   pizza_orders?: InputMaybe<Pizza_Order_Arr_Rel_Insert_Input>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
@@ -184,6 +192,8 @@ export type Friend_Max_Fields = {
   __typename?: 'friend_max_fields';
   id?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
@@ -191,6 +201,8 @@ export type Friend_Min_Fields = {
   __typename?: 'friend_min_fields';
   id?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 /** response of any mutation on the table "friend" */
@@ -220,7 +232,9 @@ export type Friend_On_Conflict = {
 export type Friend_Order_By = {
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  password?: InputMaybe<Order_By>;
   pizza_orders_aggregate?: InputMaybe<Pizza_Order_Aggregate_Order_By>;
+  username?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: friend */
@@ -233,13 +247,19 @@ export enum Friend_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Name = 'name'
+  Name = 'name',
+  /** column name */
+  Password = 'password',
+  /** column name */
+  Username = 'username'
 }
 
 /** input type for updating data in table "friend" */
 export type Friend_Set_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
@@ -272,6 +292,8 @@ export type Friend_Stream_Cursor_Input = {
 export type Friend_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -285,7 +307,11 @@ export enum Friend_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Name = 'name'
+  Name = 'name',
+  /** column name */
+  Password = 'password',
+  /** column name */
+  Username = 'username'
 }
 
 export type Friend_Updates = {
@@ -2192,10 +2218,19 @@ export type Subscription_RootPizza_Topping_StreamArgs = {
   where?: InputMaybe<Pizza_Topping_Bool_Exp>;
 };
 
+export type InsertFriendMutationVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type InsertFriendMutation = { __typename?: 'mutation_root', insert_friend_one?: { __typename?: 'friend', id: number, name: string, username: string } | null };
+
 export type GetFriendsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetFriendsQuery = { __typename?: 'query_root', friend: Array<{ __typename?: 'friend', name: string }> };
 
 
+export const InsertFriendDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertFriend"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_friend_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<InsertFriendMutation, InsertFriendMutationVariables>;
 export const GetFriendsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFriends"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"friend"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetFriendsQuery, GetFriendsQueryVariables>;

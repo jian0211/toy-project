@@ -13,7 +13,7 @@ const getValidAlgorithm = (value: string): "HS256" | "RS512" => {
   if (value === "HS256" || value === "RS512") {
     return value;
   } else {
-    throw new Error("Invalid JWT algorithm type");
+    throw new Error("Value is not a HS256, RS512.");
   }
 };
 
@@ -27,7 +27,7 @@ export const generateJWT = (params: GenerateJWTParams): string => {
     "https://hasura.io/jwt/claims": {
       "x-hasura-allowed-roles": ["user"],
       "x-hasura-default-role": "user",
-      ...params,
+      ...params.otherClaims,
     },
   };
   return jwt.sign(payload, HASURA_GRAPHQL_JWT_SECRET.key, JWT_CONFIG);

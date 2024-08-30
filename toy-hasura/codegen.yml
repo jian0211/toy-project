@@ -3,7 +3,9 @@ schema:
   - ${NEXT_PUBLIC_HASURA_PROJECT_ENDPOINT}:
       headers:
         x-hasura-admin-secret: "${HASURA_ADMIN_SECRET}"
-documents: "graphql/queries/*.graphql"
+documents:
+  - "graphql/queries/*.graphql"
+  - "app/api/_queries/*.graphql"
 generates:
   graphql/generated/:
     preset: "client"
